@@ -1,0 +1,3 @@
+# Spec Summary (Lite)
+
+Implement a desktop-like shell interface with draggable windows, video backgrounds, and single-click tool launching for the Personal Utility Command Center. The system uses a hybrid approach where built-in tools render as Svelte components and external tools load in iframes, all managed through a window manager with minimize/maximize capabilities. Focus on simple left-click operations with visual indicators for running processes and customizable video backgrounds for personalized cyberpunk aesthetics.
