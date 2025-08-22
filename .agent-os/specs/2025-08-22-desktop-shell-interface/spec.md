@@ -5,7 +5,7 @@
 
 ## Overview
 
-Implement a desktop-like shell interface that serves as the foundation for the Personal Utility Command Center (PUCC), providing window management, customizable video backgrounds, and simple one-click tool launching. This interface will create a modern, cyberpunk-themed workspace optimized for single-finger operation and personal productivity.
+Implement a desktop-like shell interface that serves as the foundation for Alkaid, providing window management, customizable video backgrounds, and simple one-click tool launching. This interface will create a modern, cyberpunk-themed workspace optimized for single-finger operation and personal productivity.
 
 ## User Stories
 
