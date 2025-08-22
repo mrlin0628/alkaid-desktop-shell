@@ -1,0 +1,18 @@
+{
+	"/": [],
+	"/api/check-video": [
+		"src/routes/api/check-video/+server.ts"
+	],
+	"/api/preferences": [
+		"src/routes/api/preferences/+server.ts"
+	],
+	"/api/tools": [
+		"src/routes/api/tools/+server.ts"
+	],
+	"/api/tools/[id]": [
+		"src/routes/api/tools/[id]/+server.ts"
+	],
+	"/api/upload": [
+		"src/routes/api/upload/+server.ts"
+	]
+}
