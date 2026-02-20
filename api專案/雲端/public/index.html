@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Space</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Ionicons for icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Cloud Space</h1>
+            <p>Minimalist Storage</p>
+        </header>
+
+        <section class="upload-section" id="drop-zone">
+            <div class="upload-box">
+                <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
+                <h2>Drag & Drop files here</h2>
+                <p>or click to browse</p>
+                <input type="file" id="file-input" hidden>
+            </div>
+            <div id="upload-progress" class="hidden">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="progress-text">Uploading...</span>
+            </div>
+        </section>
+
+        <section class="files-section">
+            <div class="section-header">
+                <h3>Recent Files</h3>
+                <button id="refresh-btn"><ion-icon name="refresh-outline"></ion-icon></button>
+            </div>
+            
+            <div class="file-list" id="file-list">
+                <!-- File items will be injected here -->
+                <div class="loading-spinner">Loading...</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -8,8 +8,9 @@
   * {
     box-sizing: border-box;
   }
-  
-  html, body {
+
+  html,
+  body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -18,7 +19,7 @@
     color: #ffffff;
     overflow: hidden;
   }
-  
+
   #root {
     height: 100vh;
     width: 100vw;
@@ -29,14 +30,34 @@
   .cyber-glow {
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
   }
-  
+
   .cyber-border {
     border: 1px solid #00ffff;
   }
-  
+
   .window-chrome {
     backdrop-filter: blur(10px);
     background: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(0, 255, 255, 0.3);
+  }
+
+  /* Minimalist "Single Line" Scrollbar */
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #00ffff;
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+    box-shadow: 0 0 5px #00ffff;
   }
 }

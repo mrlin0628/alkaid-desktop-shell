@@ -27,20 +27,27 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/api" | "/api/check-video" | "/api/preferences" | "/api/tools" | "/api/tools/[id]" | "/api/upload";
+		RouteId(): "/" | "/api" | "/api/audio-converter" | "/api/check-video" | "/api/preferences" | "/api/system" | "/api/system/start-cloud-service" | "/api/system/start-video-service" | "/api/test" | "/api/test/audio-converter" | "/api/tools" | "/api/tools/[id]" | "/api/upload" | "/login";
 		RouteParams(): {
 			"/api/tools/[id]": { id: string }
 		};
 		LayoutParams(): {
 			"/": { id?: string };
 			"/api": { id?: string };
+			"/api/audio-converter": Record<string, never>;
 			"/api/check-video": Record<string, never>;
 			"/api/preferences": Record<string, never>;
+			"/api/system": Record<string, never>;
+			"/api/system/start-cloud-service": Record<string, never>;
+			"/api/system/start-video-service": Record<string, never>;
+			"/api/test": Record<string, never>;
+			"/api/test/audio-converter": Record<string, never>;
 			"/api/tools": { id?: string };
 			"/api/tools/[id]": { id: string };
-			"/api/upload": Record<string, never>
+			"/api/upload": Record<string, never>;
+			"/login": Record<string, never>
 		};
-		Pathname(): "/" | "/api" | "/api/" | "/api/check-video" | "/api/check-video/" | "/api/preferences" | "/api/preferences/" | "/api/tools" | "/api/tools/" | `/api/tools/${string}` & {} | `/api/tools/${string}/` & {} | "/api/upload" | "/api/upload/";
+		Pathname(): "/" | "/api" | "/api/" | "/api/audio-converter" | "/api/audio-converter/" | "/api/check-video" | "/api/check-video/" | "/api/preferences" | "/api/preferences/" | "/api/system" | "/api/system/" | "/api/system/start-cloud-service" | "/api/system/start-cloud-service/" | "/api/system/start-video-service" | "/api/system/start-video-service/" | "/api/test" | "/api/test/" | "/api/test/audio-converter" | "/api/test/audio-converter/" | "/api/tools" | "/api/tools/" | `/api/tools/${string}` & {} | `/api/tools/${string}/` & {} | "/api/upload" | "/api/upload/" | "/login" | "/login/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/uploads/backgrounds/background.mp4" | string & {};
 	}

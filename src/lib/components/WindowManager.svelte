@@ -1,6 +1,14 @@
 <script lang="ts">
-  import Window from './Window.svelte';
-  import { windows, closeWindow, minimizeWindow, maximizeWindow, focusWindow, updateWindowPosition, updateWindowSize } from '../stores/windowManager';
+  import Window from "./Window.svelte";
+  import {
+    windows,
+    closeWindow,
+    minimizeWindow,
+    maximizeWindow,
+    focusWindow,
+    updateWindowPosition,
+    updateWindowSize,
+  } from "../stores/windowManager";
 
   function handleWindowClose(windowId: string) {
     closeWindow(windowId);
@@ -40,6 +48,7 @@
       zIndex={window.zIndex}
       isMaximized={window.isMaximized}
       content={window.content}
+      tool={window.tool}
       onClose={() => handleWindowClose(window.id)}
       onMinimize={() => handleWindowMinimize(window.id)}
       onMaximize={() => handleWindowMaximize(window.id)}

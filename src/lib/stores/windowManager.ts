@@ -20,11 +20,18 @@ export function createWindow(config: {
     type: 'component' | 'iframe';
     source: string;
   };
+  tool?: any;
 }): void {
-  const x = config.x ?? 50;
-  const y = config.y ?? 50;
-  const width = config.width ?? 400;
-  const height = config.height ?? 300;
+  // Determine initial size based on screen width if running in browser
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768; // Tailwind md breakpoint
+
+  const defaultWidth = isMobile ? (typeof window !== 'undefined' ? window.innerWidth : 400) : (config.width ?? 400);
+  const defaultHeight = isMobile ? (typeof window !== 'undefined' ? window.innerHeight - 100 : 300) : (config.height ?? 300); // Subtract some space for taskbar/header on mobile
+
+  const x = isMobile ? 0 : (config.x ?? 50);
+  const y = isMobile ? 0 : (config.y ?? 50);
+  const width = defaultWidth;
+  const height = defaultHeight;
 
   const newWindow: WindowState = {
     id: config.id,
@@ -39,16 +46,17 @@ export function createWindow(config: {
     originalHeight: height,
     zIndex: getNextZIndex(),
     isMinimized: false,
-    isMaximized: false,
+    isMaximized: isMobile, // Auto-maximize on mobile
     isVisible: true,
-    content: config.content
+    content: config.content,
+    tool: config.tool
   };
 
   windows.update(windowList => [...windowList, newWindow]);
 }
 
 export function closeWindow(windowId: string): void {
-  windows.update(windowList => 
+  windows.update(windowList =>
     windowList.filter(window => window.id !== windowId)
   );
 }
@@ -57,12 +65,12 @@ export function minimizeWindow(windowId: string): void {
   windows.update(windowList =>
     windowList.map(window =>
       window.id === windowId
-        ? { 
-            ...window, 
-            isMinimized: true, 
-            isVisible: false
-            // Keep isMaximized state unchanged
-          }
+        ? {
+          ...window,
+          isMinimized: true,
+          isVisible: false
+          // Keep isMaximized state unchanged
+        }
         : window
     )
   );
@@ -72,13 +80,13 @@ export function restoreWindow(windowId: string): void {
   windows.update(windowList =>
     windowList.map(window =>
       window.id === windowId
-        ? { 
-            ...window, 
-            isMinimized: false, 
-            isVisible: true,
-            // Keep the isMaximized state and position/size as they were
-            zIndex: getNextZIndex()
-          }
+        ? {
+          ...window,
+          isMinimized: false,
+          isVisible: true,
+          // Keep the isMaximized state and position/size as they were
+          zIndex: getNextZIndex()
+        }
         : window
     )
   );
@@ -88,7 +96,7 @@ export function maximizeWindow(windowId: string): void {
   windows.update(windowList =>
     windowList.map(window => {
       if (window.id !== windowId) return window;
-      
+
       if (window.isMaximized) {
         // Restore to original size
         return {
@@ -138,14 +146,14 @@ export function updateWindowPosition(windowId: string, x: number, y: number): vo
   windows.update(windowList =>
     windowList.map(window =>
       window.id === windowId
-        ? { 
-            ...window, 
-            x, 
-            y,
-            // Update original position if not maximized
-            originalX: window.isMaximized ? window.originalX : x,
-            originalY: window.isMaximized ? window.originalY : y
-          }
+        ? {
+          ...window,
+          x,
+          y,
+          // Update original position if not maximized
+          originalX: window.isMaximized ? window.originalX : x,
+          originalY: window.isMaximized ? window.originalY : y
+        }
         : window
     )
   );
@@ -155,14 +163,14 @@ export function updateWindowSize(windowId: string, width: number, height: number
   windows.update(windowList =>
     windowList.map(window =>
       window.id === windowId
-        ? { 
-            ...window, 
-            width, 
-            height,
-            // Update original size if not maximized
-            originalWidth: window.isMaximized ? window.originalWidth : width,
-            originalHeight: window.isMaximized ? window.originalHeight : height
-          }
+        ? {
+          ...window,
+          width,
+          height,
+          // Update original size if not maximized
+          originalWidth: window.isMaximized ? window.originalWidth : width,
+          originalHeight: window.isMaximized ? window.originalHeight : height
+        }
         : window
     )
   );
@@ -177,7 +185,7 @@ export function toggleMaximize(windowId: string): void {
   windows.update(windowList =>
     windowList.map(window => {
       if (window.id !== windowId) return window;
-      
+
       if (window.isMaximized) {
         // Restore to previous size/position (simplified - could store previous state)
         return {
@@ -194,8 +202,8 @@ export function toggleMaximize(windowId: string): void {
           ...window,
           x: 0,
           y: 0,
-          width: window.innerWidth || 1920,
-          height: window.innerHeight || 1080,
+          width: globalThis.innerWidth || 1920,
+          height: globalThis.innerHeight || 1080,
           isMaximized: true,
           zIndex: getNextZIndex()
         };

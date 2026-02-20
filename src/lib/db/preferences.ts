@@ -3,10 +3,12 @@ import type { UserPreference } from '../types/index.js';
 
 // Database operations for user preferences
 export class PreferencesRepository {
-  private db;
-
   constructor() {
-    this.db = getDatabase();
+    // Lazy initialization in methods
+  }
+
+  private get db() {
+    return getDatabase();
   }
 
   // Get all preferences for a user

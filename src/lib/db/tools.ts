@@ -3,10 +3,12 @@ import type { Tool } from '../types/index.js';
 
 // Database operations for tools
 export class ToolsRepository {
-  private db;
-
   constructor() {
-    this.db = getDatabase();
+    // Lazy initialization in methods
+  }
+
+  private get db() {
+    return getDatabase();
   }
 
   // Get all active tools
@@ -55,8 +57,9 @@ export class ToolsRepository {
       const stmt = this.db.prepare(`
         INSERT INTO tools (
           id, name, icon, description, type, source, category, 
+          default_width, default_height,
           sort_order, is_active, hidden
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
       try {
@@ -68,6 +71,8 @@ export class ToolsRepository {
           tool.type,
           tool.source,
           tool.category || 'general',
+          tool.defaultWidth || 400,
+          tool.defaultHeight || 300,
           tool.sortOrder || 0,
           tool.isActive !== false ? 1 : 0,
           tool.hidden ? 1 : 0
@@ -97,7 +102,7 @@ export class ToolsRepository {
       const setClause = Object.keys(allowedUpdates)
         .map(key => `${this.camelToSnake(key)} = ?`)
         .join(', ');
-      
+
       if (setClause) {
         const stmt = this.db.prepare(`
           UPDATE tools 
@@ -141,16 +146,7 @@ export class ToolsRepository {
   // Seed default tools
   seedDefaultTools(): void {
     const defaultTools: Tool[] = [
-      {
-        id: 'file-manager',
-        name: 'File Manager',
-        icon: 'folder',
-        description: 'Browse and manage files',
-        type: 'component',
-        source: '/src/tools/FileManager.svelte',
-        category: 'system',
-        sortOrder: 1
-      },
+
       {
         id: 'terminal',
         name: 'Terminal',
@@ -161,25 +157,55 @@ export class ToolsRepository {
         category: 'system',
         sortOrder: 2
       },
+
       {
-        id: 'calculator',
-        name: 'Calculator',
-        icon: 'calculator',
-        description: 'Basic calculator',
+        id: 'audio-converter',
+        name: 'Audio Converter',
+        icon: 'music',
+        description: 'Convert audio using Whisper AI',
         type: 'component',
-        source: '/src/tools/Calculator.svelte',
+        source: '/src/tools/AudioConverter.svelte',
         category: 'utilities',
-        sortOrder: 3
+        sortOrder: 5,
+        defaultWidth: 800,
+        defaultHeight: 600
       },
       {
-        id: 'text-editor',
-        name: 'Text Editor',
+        id: 'audio-result-viewer',
+        name: 'Audio Result Viewer',
         icon: 'file-text',
-        description: 'Simple text editor',
+        description: 'View audio transcription results',
         type: 'component',
-        source: '/src/tools/TextEditor.svelte',
+        source: '/src/tools/AudioResultViewer.svelte',
         category: 'utilities',
-        sortOrder: 4
+        sortOrder: 99,
+        hidden: true,
+        defaultWidth: 800,
+        defaultHeight: 600
+      },
+      {
+        id: 'video-downloader',
+        name: 'Video Downloader',
+        icon: 'cloud_download',
+        description: 'Download YouTube videos and audio',
+        type: 'component',
+        source: '/src/tools/VideoDownloader.svelte',
+        category: 'utilities',
+        sortOrder: 6,
+        defaultWidth: 340,
+        defaultHeight: 450
+      },
+      {
+        id: 'cloud-storage',
+        name: 'Cloud Storage',
+        icon: 'cloud',
+        description: 'Personal cloud storage space',
+        type: 'component',
+        source: '/src/tools/Cloud.svelte',
+        category: 'utilities',
+        sortOrder: 7,
+        defaultWidth: 800,
+        defaultHeight: 600
       }
     ];
 
@@ -222,6 +248,8 @@ export class ToolsRepository {
       type: row.type,
       source: row.source,
       category: row.category,
+      defaultWidth: row.default_width,
+      defaultHeight: row.default_height,
       sortOrder: row.sort_order,
       isActive: row.is_active === 1,
       hidden: row.hidden === 1,

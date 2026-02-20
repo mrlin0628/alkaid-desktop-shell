@@ -14,7 +14,7 @@ const DEFAULT_VIDEO_PATH = '/uploads/backgrounds/background.mp4';
 // Load preferences from localStorage or check for default video
 function loadPreferences(): BackgroundPreferences {
   if (typeof window === 'undefined') return defaultPreferences;
-  
+
   try {
     const stored = localStorage.getItem('backgroundPreferences');
     if (stored) {
@@ -25,7 +25,7 @@ function loadPreferences(): BackgroundPreferences {
       }
       return prefs;
     }
-    
+
     // Check if we have uploaded a video before
     const hasUploadedVideo = localStorage.getItem('hasUploadedVideo') === 'true';
     if (hasUploadedVideo) {
@@ -38,7 +38,7 @@ function loadPreferences(): BackgroundPreferences {
   } catch (error) {
     console.error('Failed to load preferences:', error);
   }
-  
+
   return defaultPreferences;
 }
 
@@ -57,7 +57,7 @@ if (typeof window !== 'undefined') {
       console.error('Failed to save preferences:', error);
     }
   });
-  
+
   // Check if default video exists on client initialization
   fetch('/api/check-video')
     .then(res => res.json())
@@ -71,8 +71,9 @@ if (typeof window !== 'undefined') {
             updateBackgroundPreference('source', DEFAULT_VIDEO_PATH);
           }
         } else {
-          // If no preferences saved but video exists, ask user or keep default
-          // For now, we'll keep the default color background unless explicitly set
+          // If no preferences saved but video exists, default to video
+          updateBackgroundPreference('type', 'video');
+          updateBackgroundPreference('source', DEFAULT_VIDEO_PATH);
         }
       }
     })

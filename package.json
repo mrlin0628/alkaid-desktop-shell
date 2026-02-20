@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "dev": "vite dev",
+    "dev": "vite dev --host",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -12,7 +12,7 @@
     "test:watch": "vitest",
     "test:run": "vitest --run",
     "test:ui": "vitest --ui",
-    "db:setup": "node scripts/setup-db.js"
+    "db:setup": "npx tsx scripts/setup-db.js"
   },
   "devDependencies": {
     "@sveltejs/adapter-node": "^2.0.0",
@@ -23,7 +23,7 @@
     "@testing-library/svelte": "^4.0.5",
     "@types/better-sqlite3": "^7.6.8",
     "autoprefixer": "^10.4.16",
-    "better-sqlite3": "^9.2.2",
+    "better-sqlite3": "^12.5.0",
     "jsdom": "^23.0.1",
     "postcss": "^8.4.32",
     "svelte": "^5.0.0",
@@ -36,7 +36,8 @@
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
-    "lucide-svelte": "^0.330.0"
+    "lucide-svelte": "^0.330.0",
+    "marked": "^17.0.1"
   },
   "type": "module"
 }

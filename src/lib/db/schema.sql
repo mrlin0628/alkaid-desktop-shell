@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS tools (
     type TEXT NOT NULL CHECK (type IN ('component', 'iframe')),
     source TEXT NOT NULL,
     category TEXT DEFAULT 'general',
+    default_width INTEGER DEFAULT 400,
+    default_height INTEGER DEFAULT 300,
     sort_order INTEGER DEFAULT 0,
     is_active BOOLEAN DEFAULT 1,
     hidden BOOLEAN DEFAULT 0,

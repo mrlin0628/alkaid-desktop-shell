@@ -1,10 +1,22 @@
 {
 	"/": [],
+	"/api/audio-converter": [
+		"src/routes/api/audio-converter/+server.ts"
+	],
 	"/api/check-video": [
 		"src/routes/api/check-video/+server.ts"
 	],
 	"/api/preferences": [
 		"src/routes/api/preferences/+server.ts"
+	],
+	"/api/system/start-cloud-service": [
+		"src/routes/api/system/start-cloud-service/+server.ts"
+	],
+	"/api/system/start-video-service": [
+		"src/routes/api/system/start-video-service/+server.ts"
+	],
+	"/api/test/audio-converter": [
+		"src/routes/api/test/audio-converter/+server.ts"
 	],
 	"/api/tools": [
 		"src/routes/api/tools/+server.ts"
@@ -14,5 +26,8 @@
 	],
 	"/api/upload": [
 		"src/routes/api/upload/+server.ts"
+	],
+	"/login": [
+		"src/routes/login/+page.server.ts"
 	]
 }

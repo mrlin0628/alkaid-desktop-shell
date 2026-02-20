@@ -33,6 +33,7 @@ export interface WindowState {
     type: 'component' | 'iframe';
     source: string;
   };
+  tool?: Tool;
 }
 
 export interface WindowProps {
@@ -66,26 +67,25 @@ export interface WindowProps {
 export interface Tool {
   id: string;
   name: string;
-  icon: string;
   description?: string;
+  icon?: string;
   type: 'component' | 'iframe';
   source: string;
-  category: string;
-  sortOrder?: number;
+  category?: string;
+  defaultWidth?: number;
+  defaultHeight?: number;
   isActive?: boolean;
   hidden?: boolean;
+  sortOrder?: number;
   createdAt?: string;
   updatedAt?: string;
+  // Runtime properties
+  windowId?: string;
+  isMinimized?: boolean;
+  isVisible?: boolean;
 }
 
-export interface ToolRegistry extends Map<string, Tool> {}
-
-export interface RunningToolState {
-  toolId: string;
-  windowId: string;
-  isMinimized: boolean;
-  isVisible: boolean;
-}
+export type ToolRegistry = Map<string, Tool>;
 
 export interface UserPreference {
   id?: number;

@@ -7,17 +7,17 @@ import { preferencesRepository } from './preferences';
  */
 export async function seedDatabase() {
   console.log('Starting database seeding...');
-  
+
   try {
     // Initialize database
     initializeDatabase();
-    
+
     // Seed default tools
     await seedDefaultTools();
-    
+
     // Seed default preferences
     await seedDefaultPreferences();
-    
+
     console.log('Database seeding completed successfully');
   } catch (error) {
     console.error('Database seeding failed:', error);
@@ -30,43 +30,12 @@ export async function seedDatabase() {
  */
 async function seedDefaultTools() {
   console.log('Seeding default tools...');
-  
+
   toolsRepository.seedDefaultTools();
-  
+
   // Additional tools for demo
-  const additionalTools = [
-    {
-      id: 'system-monitor',
-      name: 'System Monitor',
-      icon: 'monitor',
-      description: 'Monitor system performance and resources',
-      type: 'component' as const,
-      source: '/src/tools/SystemMonitor.svelte',
-      category: 'system',
-      sortOrder: 5
-    },
-    {
-      id: 'notepad',
-      name: 'Notepad',
-      icon: 'file-text',
-      description: 'Simple note-taking application',
-      type: 'component' as const,
-      source: '/src/tools/Notepad.svelte',
-      category: 'utilities',
-      sortOrder: 6
-    },
-    {
-      id: 'web-browser',
-      name: 'Web Browser',
-      icon: 'globe',
-      description: 'Embedded web browser',
-      type: 'iframe' as const,
-      source: 'https://example.com',
-      category: 'web',
-      sortOrder: 7
-    }
-  ];
-  
+  const additionalTools: import('../types').Tool[] = [];
+
   for (const tool of additionalTools) {
     try {
       toolsRepository.createTool(tool);
@@ -84,9 +53,9 @@ async function seedDefaultTools() {
  */
 async function seedDefaultPreferences() {
   console.log('Seeding default preferences...');
-  
+
   preferencesRepository.seedDefaultPreferences();
-  
+
   // Additional preferences for tool launcher
   const additionalPreferences = {
     'toolLauncher.gridColumns': '4',
@@ -98,7 +67,7 @@ async function seedDefaultPreferences() {
     'window.minimumWidth': '400',
     'window.minimumHeight': '300'
   };
-  
+
   try {
     preferencesRepository.setPreferences(additionalPreferences);
     console.log('Seeded additional preferences');
@@ -112,16 +81,16 @@ async function seedDefaultPreferences() {
  */
 export async function resetDatabase() {
   console.log('Resetting database...');
-  
+
   try {
     const db = initializeDatabase();
-    
+
     // Clear existing data
     db.exec('DELETE FROM tools');
     db.exec('DELETE FROM user_preferences');
-    
+
     console.log('Database reset completed');
-    
+
     // Re-seed with defaults
     await seedDatabase();
   } catch (error) {
@@ -134,7 +103,7 @@ export async function resetDatabase() {
 export async function autoSeedIfEmpty() {
   try {
     const tools = toolsRepository.getAllTools();
-    
+
     if (tools.length === 0) {
       console.log('Database appears empty, auto-seeding...');
       await seedDatabase();
